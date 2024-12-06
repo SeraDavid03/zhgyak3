@@ -63,27 +63,34 @@
                 <?php endif;?>
             <?php endwhile; ?>
         </table>
-        <div id = "naplo">
+        <div id="naplo">
             <p id="naplocim">Hőmérséklet naplózása</p>
-            <div class="search-bar">
-                <div id="varoskeres">
-                    <lable for="varos" id ="varoslable">Város:</lable>
-                    <select id="varos" name="varos">
-                        <option value="london">London</option>
-                        <option value="parizs">Párizs</option>
-                        <option value="budapest">Budapest</option>
-                    </select>
+            <form method="POST" action="log.php">
+                <div class="search-bar">
+                    <div id="varoskeres">
+                        <label for="varos" id="varoslable">Város:</label>
+                        <select id="varos" name="varosid" required>
+                            <?php
+                                $varos = $db->query("SELECT id, nev FROM varos");
+                                while ($varosoption = $varos->fetchObject()):
+                            ?>
+                                <option value="<?= $varosoption->id ?>"><?= $varosoption->nev ?></option>
+                            <?php endwhile; ?>
+                        </select>
+                    </div>
+                    <div id="datumkeres">
+                        <label for="datum" id="datumlable">Dátum:</label>
+                        <input type="date" id="datum" name="datum" required>
+                    </div>
+                    <div id="homersekletkeres">
+                        <label for="homerseklet" id="homersekletlable">Hőmérséklet:</label>
+                        <input type="number" id="homerseklet" name="homersekletertek" required>
+                    </div>
+                    <div>
+                        <button type="submit">Küldés</button>
+                    </div>
                 </div>
-                <div id="datumkeres">
-                <lable for="datum" id ="datumlable">Dátum:</lable>
-                <input type="date" id="datum">
-                </div>
-                <div id="homersekletkeres">
-                <lable for="homerseklet" id ="homersekletlable">Hőmérséklet:</lable>
-                <input type="text" id="homerseklet">
-                <div><button onclick="">Küldés</button></div>
-                </div>
-            </div>
+            </form>
         </div>
     </div>
 </body>
