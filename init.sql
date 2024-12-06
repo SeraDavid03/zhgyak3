@@ -13,7 +13,7 @@ CREATE TABLE varos (
 CREATE TABLE homerseklet (
 	id INT PRIMARY KEY AUTO_INCREMENT,
     datum DATE,
-    homerseklet FLOAT,
+    homersekletertek FLOAT,
     varosid INT,
     CONSTRAINT FK_varos_homerseklet FOREIGN KEY (varosid)
     REFERENCES varos(id)
@@ -23,10 +23,10 @@ INSERT INTO varos(nev, lakossag, atlaghomerseklet) VALUES ('London', '8.9', '9.5
 INSERT INTO varos(nev, lakossag, atlaghomerseklet) VALUES ('Párizs', '2.1', '0.00');
 INSERT INTO varos(nev, lakossag, atlaghomerseklet) VALUES ('Budapest', '1.7', '6.00');
 
-INSERT INTO homerseklet (datum, homerseklet, varosid) VALUES ('2024-11-18', '10', '1');
-INSERT INTO homerseklet (datum, homerseklet, varosid) VALUES ('2024-11-20', '9', '1');
-INSERT INTO homerseklet (datum, homerseklet, varosid) VALUES ('2024-11-18', '5', '3');
-INSERT INTO homerseklet (datum, homerseklet, varosid) VALUES ('2024-11-19', '7', '3');
-INSERT INTO homerseklet (datum, homerseklet, varosid) VALUES ('2024-11-20', '6', '3');
+INSERT INTO homerseklet (datum, homersekletertek, varosid) VALUES ('2024-11-18', '10', '1');
+INSERT INTO homerseklet (datum, homersekletertek, varosid) VALUES ('2024-11-20', '9', '1');
+INSERT INTO homerseklet (datum, homersekletertek, varosid) VALUES ('2024-11-18', '5', '3');
+INSERT INTO homerseklet (datum, homersekletertek, varosid) VALUES ('2024-11-19', '7', '3');
+INSERT INTO homerseklet (datum, homersekletertek, varosid) VALUES ('2024-11-20', '6', '3');
 
 SELECT * FROM varos;

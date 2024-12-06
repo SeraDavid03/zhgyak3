@@ -1,9 +1,23 @@
+<?php
+    require 'db.php';
+    session_start();
+    $db = getDb();
+    $result = $db->query("SELECT
+    varos.id AS varos_id,
+    varos.nev,
+    varos.lakossag,
+    varos.atlaghomerseklet
+    FROM varos
+    LEFT JOIN homerseklet ON varos.id = homerseklet.varosid
+    GROUP BY varos.id, varos.nev, varos.lakossag, varos.atlaghomerseklet
+    ");
+?>
 <!DOCTYPE html>
 <html lang="hu">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width-device-width, initial-scale=1.0">
-    <link rel="stylesheet" type="text/css" href="style.css"> 
+    <link rel="stylesheet" type="text/css" href="style.css">
     <title>Időjárás</title>
 </head>
 <body>
@@ -16,41 +30,33 @@
                 <td>Lakosság</td>
                 <td>Átlaghőmérséklet</td>
             </tr>
+            <?php while($row=$result->fetchObject()):?>
             <tr>
-                <td>London</td>
-                <td>8.9 millió fő</td>
-                <td>9.50°C</td>
+                <td><?=$row->nev?></td>
+                <td><?=$row->lakossag?>millió fő</td>
+                <td><?=$row->atlaghomerseklet?>°C</td>
             </tr>
             <tr>
                 <td colspan="3">
                     <ul>
-                        <li>2024-11-18: 10°C</li>
-                        <li>2024-11-20: 9°C</li>
+                        <?php $datapont = $db->query("SELECT
+                        datum,
+                        homersekletertek
+                        FROM homerseklet
+                        WHERE varosid = {$row->varos_id}
+                        ");
+                        $data_count = $datapont->rowCount();?>
+                        <?php if($data_count==0):?>
+                            <p id="datamissing" colspan="3">Nincs adat</p>
+                        <?php else:?>
+                            <?php while($data=$datapont->fetchObject()):?>
+                                    <li><?=$data->datum?>: <?=$data->homersekletertek?>°C</li>
+                            <?php endwhile; ?>
+                        <?php endif; ?>
                     </ul>
                 </td>
             </tr>
-            <tr>
-                <td>Párizs</td>
-                <td>2.1 millió fő</td>
-                <td>0.00°C</td>
-            </tr>
-            <tr>
-                <td id="datamissing" colspan="3">Nincs adat</td>
-            </tr>
-            <tr>
-                <td>Budapest</td>
-                <td>1.7 millió fő</td>
-                <td>6.00°C</td>
-            </tr>
-            <tr>
-                <td colspan="3">
-                    <ul>
-                        <li>2024-11-18: 5°C</li>
-                        <li>2024-11-19: 7°C</li>
-                        <li>2024-11-20: 6°C</li>
-                    </ul>
-                </td>
-            </tr>
+            <?php endwhile; ?>
         </table>
         <div id = "naplo">
             <p id="naplocim">Hőmérséklet naplózása</p>
