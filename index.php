@@ -10,6 +10,7 @@
     FROM varos
     LEFT JOIN homerseklet ON varos.id = homerseklet.varosid
     GROUP BY varos.id, varos.nev, varos.lakossag, varos.atlaghomerseklet
+    ORDER BY varos.lakossag DESC
     ");
 ?>
 <!DOCTYPE html>
@@ -31,31 +32,35 @@
                 <td>Átlaghőmérséklet</td>
             </tr>
             <?php while($row=$result->fetchObject()):?>
-            <tr>
-                <td><?=$row->nev?></td>
-                <td><?=$row->lakossag?>millió fő</td>
-                <td><?=$row->atlaghomerseklet?>°C</td>
-            </tr>
-            <tr>
-                <td colspan="3">
-                    <ul>
-                        <?php $datapont = $db->query("SELECT
-                        datum,
-                        homersekletertek
-                        FROM homerseklet
-                        WHERE varosid = {$row->varos_id}
-                        ");
-                        $data_count = $datapont->rowCount();?>
-                        <?php if($data_count==0):?>
-                            <p id="datamissing" colspan="3">Nincs adat</p>
-                        <?php else:?>
-                            <?php while($data=$datapont->fetchObject()):?>
-                                    <li><?=$data->datum?>: <?=$data->homersekletertek?>°C</li>
-                            <?php endwhile; ?>
-                        <?php endif; ?>
-                    </ul>
-                </td>
-            </tr>
+                <?php if($row->lakossag > 1):?>
+                <tr>
+                    <td><?=$row->nev?></td>
+                    <td><?=$row->lakossag?>millió fő</td>
+                    <?php $average = $db->query("SELECT IFNULL(AVG(homersekletertek), 0.00) AS atlag FROM homerseklet WHERE varosid = {$row->varos_id}");
+                    $average_data = $average->fetch(PDO::FETCH_ASSOC);?>
+                    <td><?=number_format($average_data['atlag'], 2)?>°C</td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <ul>
+                            <?php $datapont = $db->query("SELECT
+                            datum,
+                            homersekletertek
+                            FROM homerseklet
+                            WHERE varosid = {$row->varos_id}
+                            ");
+                            $data_count = $datapont->rowCount();?>
+                            <?php if($data_count==0):?>
+                                <p id="datamissing" colspan="3">Nincs adat</p>
+                            <?php else:?>
+                                <?php while($data=$datapont->fetchObject()):?>
+                                        <li><?=$data->datum?>: <?=$data->homersekletertek?>°C</li>
+                                <?php endwhile; ?>
+                            <?php endif; ?>
+                        </ul>
+                    </td>
+                </tr>
+                <?php endif;?>
             <?php endwhile; ?>
         </table>
         <div id = "naplo">
