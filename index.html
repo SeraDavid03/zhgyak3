@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width-device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css"> 
+    <title>Időjárás</title>
+</head>
+<body>
+    <h id = "cim">Időjárás</h>
+    <p id = "neptun">Séra Dávid, U7JZ93</p>
+    <div id ="tartalom">
+        <table id = "table">
+            <tr id="fejlec">
+                <td>Név</td>
+                <td>Lakosság</td>
+                <td>Átlaghőmérséklet</td>
+            </tr>
+            <tr>
+                <td>London</td>
+                <td>8.9 millió fő</td>
+                <td>9.50°C</td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <ul>
+                        <li>2024-11-18: 10°C</li>
+                        <li>2024-11-20: 9°C</li>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>Párizs</td>
+                <td>2.1 millió fő</td>
+                <td>0.00°C</td>
+            </tr>
+            <tr>
+                <td id="datamissing" colspan="3">Nincs adat</td>
+            </tr>
+            <tr>
+                <td>Budapest</td>
+                <td>1.7 millió fő</td>
+                <td>6.00°C</td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <ul>
+                        <li>2024-11-18: 5°C</li>
+                        <li>2024-11-19: 7°C</li>
+                        <li>2024-11-20: 6°C</li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+        <div id = "naplo">
+            <p id="naplocim">Hőmérséklet naplózása</p>
+            <div class="search-bar">
+                <div id="varoskeres">
+                    <lable for="varos" id ="varoslable">Város:</lable>
+                    <select id="varos" name="varos">
+                        <option value="london">London</option>
+                        <option value="parizs">Párizs</option>
+                        <option value="budapest">Budapest</option>
+                    </select>
+                </div>
+                <div id="datumkeres">
+                <lable for="datum" id ="datumlable">Dátum:</lable>
+                <input type="date" id="datum">
+                </div>
+                <div id="homersekletkeres">
+                <lable for="homerseklet" id ="homersekletlable">Hőmérséklet:</lable>
+                <input type="text" id="homerseklet">
+                <div><button onclick="">Küldés</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

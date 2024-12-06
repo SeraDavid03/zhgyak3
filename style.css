@@ -1,0 +1,40 @@
+#cim {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+#neptun {
+    font-size: 12px;
+}
+
+#tartalom {
+    display: flex;
+}
+
+#table {
+    border-collapse: collapse;
+}
+#datamissing {
+    font-style: italic;
+}
+
+#fejlec {
+    font-weight: bold;
+}
+
+tr:nth-child(even) {
+    background-color:lightgreen;
+}
+
+td, th {
+    border:1px solid black;
+    padding: 5px;
+}
+
+#naplo, #varoskeres, #datumkeres, #homersekletkeres {
+    margin: 10px;
+}
+#naplocim {
+    font-size: large;
+    font-weight: bold;
+}
